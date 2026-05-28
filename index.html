@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>六小象黑盒子 · 修改固定 IP</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>" />
+  <title>六小象黑盒子运维手册</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
   <style>
     :root {
       --primary: #2563eb;
@@ -36,7 +36,6 @@
       margin: 0 auto;
     }
 
-    /* ── 页头 ── */
     .page-header {
       background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
       border-radius: 16px;
@@ -74,7 +73,6 @@
       line-height: 1.5;
     }
 
-    /* ── 卡片 ── */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -109,383 +107,85 @@
       flex-shrink: 0;
     }
 
-    /* ── 账号密码表格 ── */
-    .cred-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .cred-table td {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-      vertical-align: middle;
-    }
-
-    .cred-table tr:last-child td { border-bottom: none; }
-
-    .cred-table .label {
-      width: 60px;
-      color: var(--text-muted);
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .cred-value {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* ── 步骤列表 ── */
-    .steps { list-style: none; }
-
-    .steps > li {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 20px;
-      align-items: flex-start;
-    }
-
-    .step-num {
-      width: 26px;
-      height: 26px;
-      background: var(--primary-light);
-      color: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .step-text {
-      flex: 1;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--text);
-      min-width: 0; /* 防止子元素撑破 flex */
-    }
-
-    .step-text strong { color: var(--primary); }
-
-    /* ── 提示条 ── */
-    .tip {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      background: #fff9e6;
-      border: 1px solid #ffd591;
-      border-left: 4px solid var(--warning);
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: #78350f;
-      line-height: 1.6;
-    }
-
-    .tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-
-    .tip .tip-content { flex: 1; min-width: 0; }
-
-    .tip .tip-content p { margin-bottom: 8px; }
-
-    .tip pre {
-      background: #1a1a2e !important;
-      padding: 10px 12px !important;
-      border-radius: 6px;
-      font-size: 12.5px !important;
-      line-height: 1.6 !important;
-      overflow-x: auto;
-    }
-
-    /* ── 代码块 ── */
-    .code-block {
-      background: var(--code-bg);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 10px 0;
-      box-shadow: 0 4px 16px rgba(0,0,0,.15);
-    }
-
-    .code-header {
-      background: #1e293b;
-      padding: 7px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .code-header span {
-      font-size: 11.5px;
-      color: #94a3b8;
-      font-family: monospace;
-    }
-
-    .copy-btn {
-      background: #334155;
-      border: none;
-      color: #94a3b8;
-      font-size: 12px;
-      padding: 4px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all .2s;
-      /* 手机端更好点击 */
-      min-height: 28px;
-      min-width: 56px;
-    }
-
-    .copy-btn.sm {
-      font-size: 11px;
-      padding: 3px 8px;
-      min-height: 24px;
-      min-width: 44px;
-      border-radius: 4px;
-    }
-
-    .copy-btn:hover, .copy-btn:active {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    pre {
-      padding: 14px 16px;
-      overflow-x: auto;
-      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-      font-size: 13px;
-      line-height: 1.8;
-      color: var(--code-text);
-      /* 手机端防止整页横向滚动 */
-      white-space: pre;
-      word-break: normal;
-    }
-
-    .cm  { color: #64748b; font-style: italic; }
-    .kw  { color: #7dd3fc; }
-    .str { color: #86efac; }
-    .ip  { color: #fbbf24; font-weight: 600; }
-    .cmd { color: #c4b5fd; }
-
-    /* ── 行内代码 ── */
-    code {
-      background: #f1f5f9;
-      color: #1d4ed8;
-      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-      font-size: 13px;
-      padding: 2px 6px;
-      border-radius: 5px;
-      word-break: break-all;
-    }
-
-    /* ── 完成标识 ── */
-    .info-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .badge-green { background: #d1fae5; color: #065f46; }
-
-    /* ── 下载链接卡片 ── */
-    .download-list {
+    .doc-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .download-item {
+    .doc-item {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
       color: var(--text);
       transition: all .25s ease;
     }
 
-    .download-item:hover {
+    .doc-item:hover {
       border-color: var(--primary);
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       transform: translateX(4px);
       box-shadow: 0 4px 16px rgba(37,99,235,.12);
     }
 
-    .download-icon {
-      width: 42px;
-      height: 42px;
+    .doc-icon {
+      width: 44px;
+      height: 44px;
       background: var(--primary);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 22px;
       flex-shrink: 0;
     }
 
-    .download-info {
+    .doc-info {
       flex: 1;
       min-width: 0;
     }
 
-    .download-name {
-      font-size: 14px;
+    .doc-name {
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
       line-height: 1.4;
     }
 
-    .download-platform {
-      font-size: 12px;
+    .doc-desc {
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 3px;
+      line-height: 1.5;
     }
 
-    .download-arrow {
-      font-size: 16px;
+    .doc-arrow {
+      font-size: 18px;
       color: var(--primary);
       font-weight: 600;
       opacity: 0;
       transition: opacity .25s, transform .25s;
     }
 
-    .download-item:hover .download-arrow {
+    .doc-item:hover .doc-arrow {
       opacity: 1;
       transform: translateX(3px);
     }
 
-    /* ── 单个二维码弹窗 ── */
-    .qr-btn {
-      width: 32px;
-      height: 32px;
-      background: #f1f5f9;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: all .2s;
-      flex-shrink: 0;
-    }
-
-    .qr-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      transform: scale(1.1);
-    }
-
-    .qr-btn:hover::after {
-      opacity: 1;
-    }
-
-    .single-qr-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,.6);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .single-qr-modal.active {
-      display: flex;
-    }
-
-    .single-qr-content {
-      background: #fff;
-      border-radius: 16px;
-      padding: 28px 24px;
-      text-align: center;
-      max-width: 300px;
-      width: 100%;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-      position: relative;
-    }
-
-    .single-qr-close {
-      position: absolute;
-      top: 10px; right: 10px;
-      width: 28px; height: 28px;
-      border: none;
-      background: #f1f5f9;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all .2s;
+      margin-bottom: 14px;
+      padding-left: 8px;
+      border-left: 3px solid var(--primary);
     }
 
-    .single-qr-close:hover {
-      background: #fee2e2;
-      color: #ef4444;
-    }
-
-    .single-qr-img {
-      width: 180px;
-      height: 180px;
-      border-radius: 10px;
-      background: #fff;
-      padding: 10px;
-      box-shadow: 0 4px 16px rgba(0,0,0,.1);
-      margin: 10px auto 14px;
-    }
-
-    .single-qr-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .single-qr-platform {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .single-qr-hint {
-      font-size: 11px;
-      color: #94a3b8;
-      margin-top: 10px;
-    }
-
-    .single-qr-url {
-      font-size: 11px;
-      color: var(--primary);
-      margin-top: 10px;
-      word-break: break-all;
-    }
-
-    /* ── 页脚 ── */
     .footer {
       text-align: center;
       font-size: 12px;
@@ -496,9 +196,6 @@
       padding-bottom: 12px;
     }
 
-    /* ════════════════════════════════
-       📱 手机端响应式
-       ════════════════════════════════ */
     @media (max-width: 600px) {
       body { padding: 16px 10px; }
 
@@ -525,508 +222,209 @@
 
       .card-title { font-size: 14px; }
 
-      /* 代码块在手机端字号缩小，保证可读性 */
-      pre {
-        font-size: 11.5px;
-        padding: 12px 12px;
-        line-height: 1.7;
-      }
-
-      .tip pre {
-        font-size: 11px !important;
-      }
-
-      .copy-btn {
-        font-size: 11px;
-        padding: 4px 10px;
-      }
-
-      /* 步骤左侧数字圆圈缩小 */
-      .step-num {
-        width: 22px;
-        height: 22px;
-        font-size: 11px;
-      }
-
-      .step-text { font-size: 13.5px; }
-
-      /* 凭证表格密码换行 */
-      .cred-table td { font-size: 13px; padding: 10px 10px; }
-      .cred-table .label { width: auto; }
-
-      code { font-size: 12px; }
-
-      .tip { font-size: 12.5px; padding: 10px 12px; }
-
-      /* 下载卡片 */
-      .download-item {
-        padding: 12px 14px;
+      .doc-item {
+        padding: 14px 16px;
         gap: 12px;
       }
 
-      .download-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 17px;
-        border-radius: 8px;
+      .doc-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+        border-radius: 10px;
       }
 
-      .download-name { font-size: 13px; }
-      .download-platform { font-size: 11px; }
+      .doc-name { font-size: 14px; }
+      .doc-desc { font-size: 12px; }
 
-      .download-arrow { display: none; }
-
-      .qr-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
-      }
-
-      /* 绑定信息两列布局手机端堆叠 */
-      .card[style*="padding:0"] > div {
-        flex-direction: column !important;
-      }
-      .card[style*="padding:0"] > div > div {
-        border-right: none !important;
-        border-bottom: 1px solid var(--border);
-      }
-      .card[style*="padding:0"] > div > div:last-child {
-        border-bottom: none;
-      }
-      .card[style*="padding:0"] .card-title { font-size: 14px; }
-      .card[style*="padding:0"] .cred-table td { font-size: 12.5px; }
-      .card[style*="padding:0"] .copy-btn.sm { font-size: 10px; padding: 2px 6px; }
+      .doc-arrow { display: none; }
     }
 
     @media (max-width: 380px) {
       .page-header h1 { font-size: 15px; }
-      pre { font-size: 10.5px; }
     }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- 页头 -->
   <div class="page-header">
-    <div class="header-icon">📦</div>
+    <div class="header-icon">📚</div>
     <div>
-      <h1>六小象黑盒子 · 修改固定 IP</h1>
-      <p>通过 SSH 登录，使用 Netplan 为设备配置静态 IP 地址</p>
+      <h1>六小象黑盒子运维手册</h1>
+      <p>设备配置、故障排查、日常维护指南</p>
     </div>
   </div>
 
-  <!-- 卡片 1：账号密码 & 六小象绑定信息 -->
-  <div class="card" style="display:none"></div>
-  <div class="card" style="padding:0;overflow:hidden;">
-    <div style="display:flex;flex-wrap:wrap;">
-      <!-- 左侧：小盒子登录凭证 -->
-      <div style="flex:1;padding:24px 28px;min-width:280px;border-right:1px solid var(--border);">
-        <div class="card-title" style="margin-bottom:14px;">
-          <div class="step-badge">🔑</div>
-          小盒子登录凭证
+  <div class="card">
+    <div class="card-title">
+      <div class="step-badge">🔧</div>
+      设备配置
+    </div>
+    <div class="doc-list">
+      <a href="#change-ip" class="doc-item">
+        <div class="doc-icon">🌐</div>
+        <div class="doc-info">
+          <div class="doc-name">修改固定 IP</div>
+          <div class="doc-desc">通过 SSH 登录，使用 Netplan 为设备配置静态 IP 地址</div>
         </div>
-        <table class="cred-table">
-          <tr>
-            <td class="label">默认IP</td>
-            <td><code>169.254.255.10</code></td>
-          </tr>
-          <tr>
-            <td class="label">账号</td>
-            <td><code>pi</code></td>
-          </tr>
-          <tr>
-            <td class="label">密码</td>
-            <td><code>sixelp@2024#168..</code></td>
-          </tr>
-          <tr>
-            <td colspan="2" style="padding-top:16px;padding-bottom:4px;font-size:12px;color:var(--text-muted);font-weight:600;">常用命令</td>
-          </tr>
-          <tr>
-            <td class="label">IP查看</td>
-            <td><code>ip a</code></td>
-          </tr>
-          <tr>
-            <td class="label">网卡查看</td>
-            <td><code>ifconfig</code></td>
-          </tr>
-          <tr>
-            <td class="label">网络测试</td>
-            <td><code>sudo ping www.baidu.com</code></td>
-          </tr>
-        </table>
-      </div>
-      <!-- 右侧：六小象绑定信息 -->
-      <div style="flex:1;padding:24px 28px;min-width:280px;background:#fafbfc;">
-        <div class="card-title" style="margin-bottom:14px;">
-          <div class="step-badge">🔗</div>
-          六小象绑定信息
-          <button class="copy-btn sm" onclick="copyAllInfo()" style="margin-left:auto;">📋 一键复制全部</button>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#network-setup" class="doc-item">
+        <div class="doc-icon">🔗</div>
+        <div class="doc-info">
+          <div class="doc-name">网络配置</div>
+          <div class="doc-desc">网络连接设置、DNS 配置、多网口绑定</div>
         </div>
-        <table class="cred-table">
-          <tr>
-            <td class="label">智库名称</td>
-            <td><code>川赢测试-2</code></td>
-          </tr>
-          <tr>
-            <td class="label">门店编号</td>
-            <td><code>iz137611</code></td>
-          </tr>
-          <tr>
-            <td class="label">小盒子底部拍照</td>
-            <td><code>（编码）</code></td>
-          </tr>
-          <tr>
-            <td class="label">外网IP</td>
-            <td><code>14.19.38.167</code></td>
-          </tr>
-          <tr>
-            <td class="label">录像机IP</td>
-            <td><code>192.168.8.125</code></td>
-          </tr>
-          <tr>
-            <td class="label">录像机账号</td>
-            <td><code>admin</code></td>
-          </tr>
-          <tr>
-            <td class="label">录像机密码</td>
-            <td><code>a12345678</code></td>
-          </tr>
-          <tr>
-            <td class="label">录像机品牌</td>
-            <td><code>大华</code></td>
-          </tr>
-        </table>
-      </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#time-sync" class="doc-item">
+        <div class="doc-icon">⏰</div>
+        <div class="doc-info">
+          <div class="doc-name">时间同步</div>
+          <div class="doc-desc">NTP 时间服务器配置与校准</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
     </div>
   </div>
 
-  <!-- 卡片 2：步骤 -->
+  <div class="card">
+    <div class="card-title">
+      <div class="step-badge">🛠️</div>
+      故障排查
+    </div>
+    <div class="doc-list">
+      <a href="#connection-issues" class="doc-item">
+        <div class="doc-icon">🔌</div>
+        <div class="doc-info">
+          <div class="doc-name">连接问题</div>
+          <div class="doc-desc">SSH 连接失败、网络不通等常见问题处理</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#video-problems" class="doc-item">
+        <div class="doc-icon">📹</div>
+        <div class="doc-info">
+          <div class="doc-name">录像问题</div>
+          <div class="doc-desc">视频流卡顿、录像丢失、存储异常排查</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#system-crash" class="doc-item">
+        <div class="doc-icon">⚠️</div>
+        <div class="doc-info">
+          <div class="doc-name">系统异常</div>
+          <div class="doc-desc">系统崩溃、服务重启、日志分析</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="step-badge">📦</div>
+      软件安装
+    </div>
+    <div class="doc-list">
+      <a href="#plugin-install" class="doc-item">
+        <div class="doc-icon">🔌</div>
+        <div class="doc-info">
+          <div class="doc-name">飞像插件安装</div>
+          <div class="doc-desc">Windows 客户端插件安装与配置</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#mobile-app" class="doc-item">
+        <div class="doc-icon">📱</div>
+        <div class="doc-info">
+          <div class="doc-name">移动应用安装</div>
+          <div class="doc-desc">聚像、智像 Android 应用下载与安装</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#utility-tools" class="doc-item">
+        <div class="doc-icon">🛡️</div>
+        <div class="doc-info">
+          <div class="doc-name">辅助工具</div>
+          <div class="doc-desc">银台条码接收程序、防损插件安装</div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">
       <div class="step-badge">📋</div>
-      操作步骤
+      维护指南
     </div>
-
-    <ol class="steps">
-
-      <!-- Step 1 -->
-      <li>
-        <div class="step-num">1</div>
-        <div class="step-text">
-          拿条网线把电脑和小盒子接起来，把电脑的本地 IP 地址改为 <code>169.254.255.100</code>。
+    <div class="doc-list">
+      <a href="#daily-check" class="doc-item">
+        <div class="doc-icon">✅</div>
+        <div class="doc-info">
+          <div class="doc-name">日常巡检</div>
+          <div class="doc-desc">设备状态检查、日志查看、性能监控</div>
         </div>
-      </li>
-
-      <!-- Step 2 -->
-      <li>
-        <div class="step-num">2</div>
-        <div class="step-text">
-          按 <strong>Win + R</strong>，输入 <code>cmd</code>，回车打开命令提示符。
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#backup-guide" class="doc-item">
+        <div class="doc-icon">💾</div>
+        <div class="doc-info">
+          <div class="doc-name">数据备份</div>
+          <div class="doc-desc">配置文件备份、录像数据迁移</div>
         </div>
-      </li>
-
-      <!-- Step 3 -->
-      <li>
-        <div class="step-num">3</div>
-        <div class="step-text">
-          SSH 登录盒子（使用小盒子默认 IP <code>169.254.255.10</code>）：
-          <div class="code-block">
-            <div class="code-header">
-              <span>CMD</span>
-              <button class="copy-btn" onclick="copyCode(this)">复制</button>
-            </div>
-            <pre>ssh pi@<span class="ip">169.254.255.10</span></pre>
-          </div>
+        <div class="doc-arrow">→</div>
+      </a>
+      <a href="#upgrade-guide" class="doc-item">
+        <div class="doc-icon">⬆️</div>
+        <div class="doc-info">
+          <div class="doc-name">系统升级</div>
+          <div class="doc-desc">固件升级、软件更新、版本回滚</div>
         </div>
-      </li>
-
-      <!-- Step 4 -->
-      <li>
-        <div class="step-num">4</div>
-        <div class="step-text">
-          SSH 首次连接时，会提示确认主机指纹，输入 <code>yes</code> 回车：
-          <div class="code-block">
-            <div class="code-header">
-              <span>CMD</span>
-            </div>
-            <pre>Are you sure you want to continue connecting (yes/no/[fingerprint])?</pre>
-          </div>
-          <div class="tip">
-            <span class="tip-icon">💡</span>
-            <div class="tip-content">
-              输入 <code>yes</code> 回车即可，此提示仅首次连接时出现。
-            </div>
-          </div>
-        </div>
-      </li>
-
-      <!-- Step 5 -->
-      <li>
-        <div class="step-num">5</div>
-        <div class="step-text">
-          输入账户密码：<span style="color:var(--text-muted);font-size:13px;">（鼠标右键直接粘贴，无回显属正常）</span>
-          <div class="code-block">
-            <div class="code-header">
-              <span>账户密码</span>
-              <button class="copy-btn" onclick="copyCode(this)">复制</button>
-            </div>
-            <pre>sixelp@2024#168..</pre>
-          </div>
-        </div>
-      </li>
-
-      <!-- Step 6 -->
-      <li>
-        <div class="step-num">6</div>
-        <div class="step-text">
-          写入 Netplan 配置（设置固定 IP）：
-          <div class="code-block">
-            <div class="code-header">
-              <span>bash — netplan config</span>
-              <button class="copy-btn" onclick="copyCode(this)">复制</button>
-            </div>
-<pre><span class="cmd">sudo tee</span> /etc/netplan/00-installer-config.yaml &gt;/dev/null &lt;&lt;<span class="str">'EOF'</span>
-<span class="kw">network</span>:
-  <span class="kw">version</span>: 2
-  <span class="kw">renderer</span>: networkd
-  <span class="kw">ethernets</span>:
-    <span class="kw">eth0</span>:
-      <span class="kw">dhcp4</span>: yes
-      <span class="kw">addresses</span>:
-        - <span class="ip">192.168.110.50</span>/24    <span class="cm"># 需要修改的 IP</span>
-      <span class="kw">nameservers</span>:
-        <span class="kw">addresses</span>: [<span class="ip">114.114.114.114</span>]
-EOF</pre>
-          </div>
-          回车确认。
-          <div class="tip">
-            <span class="tip-icon">💡</span>
-            <div class="tip-content">
-              <p>需要配置<strong>多个 IP</strong> 时，在 <code>addresses</code> 下增加条目即可：</p>
-              <pre><span class="kw">addresses</span>:
-  - <span class="ip">192.168.110.50</span>/24    <span class="cm"># 第一个 IP</span>
-  - <span class="ip">192.168.111.50</span>/24    <span class="cm"># 第二个 IP</span></pre>
-            </div>
-          </div>
-        </div>
-      </li>
-
-      <!-- Step 7 -->
-      <li>
-        <div class="step-num">7</div>
-        <div class="step-text">
-          若提示输入 sudo 密码，输入账户密码后回车（不显示字符属正常）；不提示则直接执行下一步。
-          <div class="code-block">
-            <div class="code-header">
-              <span>bash</span>
-            </div>
-            <pre>[sudo] password for pi: <span class="cm"> # 输入密码后回车，无回显属正常</span></pre>
-          </div>
-        </div>
-      </li>
-
-      <!-- Step 8 -->
-      <li>
-        <div class="step-num">8</div>
-        <div class="step-text">
-          应用配置，立即生效：
-          <div class="code-block">
-            <div class="code-header">
-              <span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this)">复制</button>
-            </div>
-            <pre><span class="cmd">sudo netplan apply</span>    <span class="cm"># 立即生效，无需重启</span></pre>
-          </div>
-        </div>
-      </li>
-
-      <!-- Step 9 -->
-      <li>
-        <div class="step-num">9</div>
-        <div class="step-text">
-          验证 IP 是否生效：
-          <div class="code-block">
-            <div class="code-header">
-              <span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this)">复制</button>
-            </div>
-            <pre><span class="cmd">ip a</span>    <span class="cm"># 查看当前所有 IP 地址</span></pre>
-          </div>
-          <div class="info-row">
-            <span class="badge badge-green">✅ 完成</span>
-            在输出中看到配置的 IP 地址即表示设置成功。
-          </div>
-        </div>
-      </li>
-
-    </ol>
+        <div class="doc-arrow">→</div>
+      </a>
+    </div>
   </div>
 
-  <!-- 卡片 3：安装包下载 -->
   <div class="card">
     <div class="card-title">
-      <div class="step-badge">⬇️</div>
-      安装包下载
+      <div class="step-badge">💡</div>
+      常用命令
     </div>
-    <div class="download-list">
-      <a href="http://erz.cc/wpos" target="_blank" class="download-item">
-        <div class="download-icon">🖥️</div>
-        <div class="download-info">
-          <div class="download-name">飞像插件</div>
-          <div class="download-platform">Windows</div>
+    <div class="doc-list">
+      <a href="#network-cmds" class="doc-item">
+        <div class="doc-icon">🌐</div>
+        <div class="doc-info">
+          <div class="doc-name">网络命令</div>
+          <div class="doc-desc">ip、ifconfig、ping、netstat 等常用命令</div>
         </div>
-        <button class="qr-btn" onclick="showQr('http://erz.cc/wpos','飞像插件','Windows')" title="查看二维码">📱</button>
-        <div class="download-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
-      <a href="http://erz.cc/alab" target="_blank" class="download-item">
-        <div class="download-icon">📱</div>
-        <div class="download-info">
-          <div class="download-name">聚像 & 智像</div>
-          <div class="download-platform">Android</div>
+      <a href="#system-cmds" class="doc-item">
+        <div class="doc-icon">🖥️</div>
+        <div class="doc-info">
+          <div class="doc-name">系统命令</div>
+          <div class="doc-desc">进程管理、文件操作、权限管理</div>
         </div>
-        <button class="qr-btn" onclick="showQr('http://erz.cc/alab','聚像 & 智像','Android')" title="查看二维码">📱</button>
-        <div class="download-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
-      <a href="http://erz.cc/winahk" target="_blank" class="download-item">
-        <div class="download-icon">💻</div>
-        <div class="download-info">
-          <div class="download-name">银台条码接收程序 / 防损插件</div>
-          <div class="download-platform">Windows</div>
+      <a href="#log-cmds" class="doc-item">
+        <div class="doc-icon">📝</div>
+        <div class="doc-info">
+          <div class="doc-name">日志命令</div>
+          <div class="doc-desc">日志查看、过滤、分析命令</div>
         </div>
-        <button class="qr-btn" onclick="showQr('http://erz.cc/winahk','银台条码接收程序 / 防损插件','Windows')" title="查看二维码">📱</button>
-        <div class="download-arrow">→</div>
-      </a>
-      <a href="http://erz.cc/andahk" target="_blank" class="download-item">
-        <div class="download-icon">🤖</div>
-        <div class="download-info">
-          <div class="download-name">银台条码接收程序 / 防损插件</div>
-          <div class="download-platform">Android</div>
-        </div>
-        <button class="qr-btn" onclick="showQr('http://erz.cc/andahk','银台条码接收程序 / 防损插件','Android')" title="查看二维码">📱</button>
-        <div class="download-arrow">→</div>
-      </a>
-      <a href="http://erz.cc/inventory" target="_blank" class="download-item">
-        <div class="download-icon">📦</div>
-        <div class="download-info">
-          <div class="download-name">AI速盘</div>
-          <div class="download-platform">Android</div>
-        </div>
-        <button class="qr-btn" onclick="showQr('http://erz.cc/inventory','AI速盘','Android')" title="查看二维码">📱</button>
-        <div class="download-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
     </div>
   </div>
 
-  <!-- 单个二维码弹窗 -->
-  <div class="single-qr-modal" id="singleQrModal">
-    <div class="single-qr-content">
-      <button class="single-qr-close" onclick="closeQr()">✕</button>
-      <img class="single-qr-img" id="singleQrImg" src="" alt="二维码" />
-      <div class="single-qr-name" id="singleQrName"></div>
-      <div class="single-qr-platform" id="singleQrPlatform"></div>
-      <div class="single-qr-url" id="singleQrUrl"></div>
-    </div>
-  </div>
-
-  <!-- 页脚 -->
   <div class="footer">
     六小象黑盒子运维文档 · 仅供内部使用
   </div>
 
 </div>
-
-<script>
-  function copyCode(btn) {
-    const pre = btn.closest('.code-block').querySelector('pre');
-    // 获取纯文本，过滤 HTML 标签
-    const text = (pre.innerText || pre.textContent).trim();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => showCopied(btn));
-    } else {
-      // 兼容旧版浏览器 / 部分 Android WebView
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showCopied(btn);
-    }
-  }
-
-  function showCopied(btn) {
-    btn.textContent = '已复制 ✓';
-    btn.style.background = '#10b981';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-      btn.textContent = '复制';
-      btn.style.background = '';
-      btn.style.color = '';
-    }, 2000);
-  }
-
-  function toggleQrModal() {
-    const modal = document.getElementById('qrModal');
-    modal.classList.toggle('active');
-    // 点击遮罩层也可关闭
-    modal.onclick = function(e) {
-      if (e.target === modal) toggleQrModal();
-    };
-  }
-
-  function showQr(url, name, platform) {
-    event.preventDefault();
-    event.stopPropagation();
-    const encoded = encodeURIComponent(url);
-    document.getElementById('singleQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?data=${encoded}&size=200x200&margin=6`;
-    document.getElementById('singleQrName').textContent = name;
-    document.getElementById('singleQrPlatform').textContent = platform;
-    document.getElementById('singleQrUrl').textContent = url;
-    document.getElementById('singleQrModal').classList.add('active');
-  }
-
-  function closeQr() {
-    document.getElementById('singleQrModal').classList.remove('active');
-  }
-
-  function copyAllInfo() {
-    const text = `智库名称：川赢测试-2
-门店编号：iz137611
-小盒子底部拍照：（编码）
-外网IP：14.19.38.167
-录像机IP：192.168.8.125
-录像机账号：admin
-录像机密码：a12345678
-录像机品牌：大华`;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.querySelector('.card-title .copy-btn');
-        showCopied(btn);
-      });
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      const btn = document.querySelector('.card-title .copy-btn');
-      showCopied(btn);
-    }
-  }
-
-  // 点击遮罩层 / ESC 键关闭
-  document.getElementById('singleQrModal').addEventListener('click', function(e) {
-    if (e.target === this) closeQr();
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeQr();
-  });
-</script>
 </body>
 </html>
